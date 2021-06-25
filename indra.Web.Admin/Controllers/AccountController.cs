@@ -40,7 +40,7 @@ namespace indra.Web.Admin.Controllers
                 Usuario admin = _context.Usuarios.Where(p => p.Login == Email && p.Senha == Senha).FirstOrDefault();
                 if (admin != null)
                 {
-                    var pessoa = _context.Pessoas.Find(admin.PessoaId);
+                    var pessoa = _context.PessoasFisicas.Find(admin.PessoaFisicaId);
                     if (pessoa.Ativo == true)
                     {
                         if (pessoa.Tipo == eTipo.Administrador)
@@ -76,16 +76,16 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registrar(Pessoa admin)
+        public IActionResult Registrar(PessoaFisica admin)
         {
             ViewBag.error = null;
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == admin.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == admin.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um admin criado com esse Email");
                 }
-                else if (_context.Pessoas.Where(e => e.Email == admin.Email).Count() > 0)
+                else if (_context.PessoasFisicas.Where(e => e.Email == admin.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um admin criado com esse CPF");
                 }
@@ -98,7 +98,7 @@ namespace indra.Web.Admin.Controllers
                     admin.DtAlteracao = DateTime.Now;
                     admin.Tipo = eTipo.Administrador;
                     admin.Ativo = true;
-                    usuario.Pessoa = admin;
+                    usuario.PessoaFisica = admin;
 
                     //ATRIBUIÇÃO DE DADOS DE PESSOA EM USUÁRIO
                     _context.Usuarios.Add(usuario);
@@ -125,10 +125,10 @@ namespace indra.Web.Admin.Controllers
         {
             try
             {
-                Pessoa admin = _context.Pessoas.Where(p => p.Cpf == Cpf).FirstOrDefault();
+                PessoaFisica admin = _context.PessoasFisicas.Where(p => p.Cpf == Cpf).FirstOrDefault();
                 if (admin != null)
                 {
-                    Usuario user = _context.Usuarios.Where(e => e.PessoaId == admin.Id).FirstOrDefault();
+                    Usuario user = _context.Usuarios.Where(e => e.PessoaFisicaId == admin.Id).FirstOrDefault();
                     _login.Login(user);
                     return RedirectToAction("Dashboard", "Home");
                 }

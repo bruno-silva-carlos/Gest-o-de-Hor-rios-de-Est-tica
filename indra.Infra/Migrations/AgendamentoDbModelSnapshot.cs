@@ -48,12 +48,12 @@ namespace indra.Infra.Migrations
                 b.Property<int?>("Senha")
                     .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                b.Property<int>("PessoaId")
+                b.Property<int>("PessoaFisicaId")
                     .HasColumnType("int");
 
                 b.HasKey("Id");
 
-                b.HasIndex("PessoaId");
+                b.HasIndex("PessoaFisicaId");
 
                 b.ToTable("Usuarios");
             });
@@ -128,7 +128,7 @@ namespace indra.Infra.Migrations
 
 
 
-            modelBuilder.Entity("Agendamento.Models.Pessoa", b =>
+            modelBuilder.Entity("Agendamento.Models.PessoaFisica", b =>
             {
                 b.Property<int>("Id")
                     .ValueGeneratedOnAdd()
@@ -172,18 +172,18 @@ namespace indra.Infra.Migrations
 
                 b.HasKey("Id");
 
-                b.ToTable("Pessoas");
+                b.ToTable("PessoasFisicas");
             });
 
             modelBuilder.Entity("AgendamentoPacientes.Models.Agendamentos", b =>
             {
-                b.HasOne("AgendamentoPacientes.Models.Pessoa", "Pessoa")
+                b.HasOne("AgendamentoPacientes.Models.PessoaFisica", "PessoaFisica")
                     .WithMany()
                     .HasForeignKey("ClienteId")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("Agendamento.Models.Pessoa", "Pessoa")
+                b.HasOne("Agendamento.Models.PessoaFisica", "PessoaFisica")
                     .WithMany()
                     .HasForeignKey("ProfissionalId")
                     .OnDelete(DeleteBehavior.Cascade)

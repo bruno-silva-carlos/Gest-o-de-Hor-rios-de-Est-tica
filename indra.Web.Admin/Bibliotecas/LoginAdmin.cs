@@ -11,7 +11,7 @@ namespace indra.Web.Admin.Bibliotecas
 {
     public class LoginAdmin
     {
-        private string Key = "Login.Pessoa";
+        private string Key = "Login.PessoaFisica";
         private Sessao _sessao;
 
         public LoginAdmin(Sessao sessao) 

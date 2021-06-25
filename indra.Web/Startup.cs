@@ -44,7 +44,7 @@ namespace indra.Web
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<Sessao>();
-            services.AddScoped<LoginPessoa>();
+            services.AddScoped<LoginPessoaFisica>();
             services.AddDbContext<AgendamentoDb>(options =>
                 options.UseMySql(Configuration.GetConnectionString("connectionString")));
             services.AddDbContext<AgendamentoDb>(options =>

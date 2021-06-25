@@ -35,7 +35,7 @@ namespace indra.Web.Admin.Controllers
         public IActionResult Perfil()
         {
             var user = _login.GetAdmin();
-            var dadosPerfil = _context.Pessoas.Find(user.Id);
+            var dadosPerfil = _context.PessoasFisicas.Find(user.Id);
             ViewBag.Nome = dadosPerfil.Nome;
             ViewBag.Email = dadosPerfil.Email;
             ViewBag.Sexo = dadosPerfil.Sexo;
@@ -52,15 +52,15 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AtualizarPerfil(Pessoa admin)
+        public IActionResult AtualizarPerfil(PessoaFisica admin)
         {
             try
             {
                 admin.DtAlteracao = DateTime.Now;
-                _context.Pessoas.Update(admin);
+                _context.PessoasFisicas.Update(admin);
                 _context.SaveChanges();
-                Pessoa adm = _context.Pessoas.Find(admin.Id);
-                Usuario user = _context.Usuarios.Where(e => e.PessoaId == adm.Id).FirstOrDefault();
+                PessoaFisica adm = _context.PessoasFisicas.Find(admin.Id);
+                Usuario user = _context.Usuarios.Where(e => e.PessoaFisicaId == adm.Id).FirstOrDefault();
                 _login.Login(user);
                 return Json(new { success = true, message = $"Perfil atualizado com sucesso." });
             }
@@ -73,11 +73,11 @@ namespace indra.Web.Admin.Controllers
         public IActionResult Dashboard()
         {
             var dashDTO = new DashboardDTO();
-            dashDTO.QtdProfissionais = _context.Pessoas.Where(e => e.Tipo == eTipo.Profissional && e.Ativo == true).Count();
-            dashDTO.QtdClientes = _context.Pessoas.Where(e => e.Tipo == eTipo.Cliente && e.Ativo == true).Count();
+            dashDTO.QtdProfissionais = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional && e.Ativo == true).Count();
+            dashDTO.QtdClientes = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Cliente && e.Ativo == true).Count();
             dashDTO.QtdServicos = _context.Servicos.Count();
             dashDTO.QtdAgendamentos = _context.Agendamentos.Where(e => e.SituacaoAgendamentoId == 1).Count();
-            dashDTO.QtdAdministradores = _context.Pessoas.Where(e => e.Tipo == eTipo.Administrador && e.Ativo == true).Count();
+            dashDTO.QtdAdministradores = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Administrador && e.Ativo == true).Count();
 
             return View(dashDTO);
         }

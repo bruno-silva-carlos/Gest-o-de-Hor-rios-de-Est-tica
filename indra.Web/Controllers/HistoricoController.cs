@@ -16,10 +16,10 @@ namespace indra.Web.Controllers
     {
         public List<Agendamentos> listaFiltrada;
         private readonly AgendamentoDb _context;
-        private readonly LoginPessoa _login;
+        private readonly LoginPessoaFisica _login;
         private readonly IWebHostEnvironment _oHostEnvironment;
 
-        public HistoricoController(AgendamentoDb context, LoginPessoa login)
+        public HistoricoController(AgendamentoDb context, LoginPessoaFisica login)
         {
             _context = context;
             _login = login;
@@ -34,7 +34,7 @@ namespace indra.Web.Controllers
         public IActionResult Cliente(int? param, DateTime dataInicio, DateTime dataFim, int situacao)
         {
             var pessoa = _login.GetUsuario();
-            List<Agendamentos> agendamentos = _context.Agendamentos.Where(e => e.ClienteId == pessoa.PessoaId)
+            List<Agendamentos> agendamentos = _context.Agendamentos.Where(e => e.ClienteId == pessoa.PessoaFisicaId)
                 .Include(e => e.Profissional)
                 .Include(e => e.Cliente)
                 .Include(e => e.Servico)

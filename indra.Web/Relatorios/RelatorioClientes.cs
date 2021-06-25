@@ -33,10 +33,10 @@ namespace indra.Web.Relatorios
         PdfPTable _pdfTableHeader = new PdfPTable(2);
         PdfPTable _pdfTitulo = new PdfPTable(3);
         MemoryStream _memoryStream = new MemoryStream();
-        List<Pessoa> _clientes = new List<Pessoa>();
+        List<PessoaFisica> _clientes = new List<PessoaFisica>();
         #endregion
 
-        public byte[] PrepareReport(List<Pessoa> clientes)
+        public byte[] PrepareReport(List<PessoaFisica> clientes)
         {
             _clientes = clientes;
             _document = new Document();

@@ -16,27 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `__efmigrationshistory`
+-- Table structure for table `profissionalservicos`
 --
 
-DROP TABLE IF EXISTS `__efmigrationshistory`;
+DROP TABLE IF EXISTS `profissionalservicos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `__efmigrationshistory` (
-  `MigrationId` varchar(95) NOT NULL,
-  `ProductVersion` varchar(32) NOT NULL,
-  PRIMARY KEY (`MigrationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `profissionalservicos` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `ProfissionalId` int NOT NULL,
+  `ServicoId` int NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_Agendamentos_ProfissionalId` (`ProfissionalId`),
+  KEY `IX_Agendamentos_ServicoId` (`ServicoId`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `__efmigrationshistory`
+-- Dumping data for table `profissionalservicos`
 --
 
-LOCK TABLES `__efmigrationshistory` WRITE;
-/*!40000 ALTER TABLE `__efmigrationshistory` DISABLE KEYS */;
-INSERT INTO `__efmigrationshistory` VALUES ('20210319010235_inserindoTabelas','3.1.12');
-/*!40000 ALTER TABLE `__efmigrationshistory` ENABLE KEYS */;
+LOCK TABLES `profissionalservicos` WRITE;
+/*!40000 ALTER TABLE `profissionalservicos` DISABLE KEYS */;
+INSERT INTO `profissionalservicos` VALUES (1,6,4),(2,6,2),(3,6,1),(4,7,2),(5,10,4),(6,15,2),(7,16,1);
+/*!40000 ALTER TABLE `profissionalservicos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-25 17:04:29
+-- Dump completed on 2021-06-25 17:31:43

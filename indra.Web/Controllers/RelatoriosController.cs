@@ -17,10 +17,10 @@ namespace indra.Web.Controllers
     {
         public List<Agendamentos> listaFiltrada;
         private readonly AgendamentoDb _context;
-        private readonly LoginPessoa _login;
+        private readonly LoginPessoaFisica _login;
         private readonly IWebHostEnvironment _oHostEnvironment;
 
-        public RelatoriosController(AgendamentoDb context, LoginPessoa login)
+        public RelatoriosController(AgendamentoDb context, LoginPessoaFisica login)
         {
             _context = context;
             _login = login;
@@ -36,7 +36,7 @@ namespace indra.Web.Controllers
         public IActionResult Agendamentos(int? param, DateTime dataInicio, DateTime dataFim, int situacao)
         {
             var pessoa = _login.GetUsuario();
-            List<Agendamentos> agendamentos = _context.Agendamentos.Where(e => e.ProfissionalId == pessoa.PessoaId)
+            List<Agendamentos> agendamentos = _context.Agendamentos.Where(e => e.ProfissionalId == pessoa.PessoaFisicaId)
                 .Include(e => e.Profissional)
                 .Include(e => e.Cliente)
                 .Include(e => e.Servico)
@@ -84,7 +84,7 @@ namespace indra.Web.Controllers
         [HttpPost]
         public IActionResult Clientes(int? param)
         {
-            List<Pessoa> clientes = _context.Pessoas.Where(e => e.Tipo == eTipo.Cliente).OrderBy(e => e.Id).ToList();
+            List<PessoaFisica> clientes = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Cliente).OrderBy(e => e.Id).ToList();
             RelatorioClientes report = new RelatorioClientes(_oHostEnvironment);
             return File(report.PrepareReport(clientes), "application/pdf");
         }

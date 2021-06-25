@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.24, for Win64 (x86_64)
 --
--- Host: 104.41.59.106    Database: gestao_indra
+-- Host: localhost    Database: gestao_indra
 -- ------------------------------------------------------
--- Server version	8.0.25
+-- Server version	8.0.24
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +29,7 @@ CREATE TABLE `usuarios` (
   `PessoaId` int DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `FK_Usuarios_Pessoas_PessoaId` (`PessoaId`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'cliente@cliente','cliente',1),(2,'prof@prof','1234',2),(3,'alanbrado@gmail.com','vila2016',3),(4,'cliente2@cliente','1234',4),(5,'brunocdasilva12@gmail.com','vila2016',6),(6,'eliane@gmail.com','12345',7),(7,'pluggg10@gmail.com','168065400',8),(8,'cliente@cliente2','123456',9),(9,'vinicin@botox','123456',10),(10,'gabrielteans@gmail.com','123456',11),(11,'caiege_@hotmail.com','102030',12),(12,'carlos.io@outlook.com','123',13),(13,'solelohin@gmail.com','168065400Ff',14),(14,'bealins@gmail.com','168065400Ff',15),(15,'luizasantos@gmail.com','168065400',19),(16,'gabrielavieira-@hotmail.com','Gabriela1@',20),(17,'buzzipsy@gmail.com','013755esb',21),(18,'cristiangynmarchetti@gmail.com','19769898',22);
+INSERT INTO `usuarios` VALUES (1,'cliente@cliente','cliente',1),(2,'prof@prof','1234',2),(3,'alanbrado@gmail.com','vila2016',3),(4,'cliente2@cliente','1234',4),(5,'brunocdasilva12@gmail.com','vila2016',6),(6,'eliane@gmail.com','12345',7),(7,'pluggg10@gmail.com','168065400',8),(8,'cliente@cliente2','123456',9),(9,'vinicin@botox','123456',10),(10,'gabrielteans@gmail.com','123456',11),(11,'caiege_@hotmail.com','102030',12),(12,'carlos.io@outlook.com','123',13),(13,'solelohin@gmail.com','168065400Ff',14),(14,'bealins@gmail.com','168065400Ff',15),(15,'luizasantos@gmail.com','168065400',19),(16,'gabrielavieira-@hotmail.com','Gabriela1@',20),(17,'buzzipsy@gmail.com','013755esb',21),(18,'cristiangynmarchetti@gmail.com','19769898',22),(19,'admin@admin','admin',23);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-25 12:29:05
+-- Dump completed on 2021-06-25 17:04:30

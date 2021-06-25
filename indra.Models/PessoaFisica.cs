@@ -7,7 +7,7 @@ using System.Web;
 
 namespace indra.Models
 {
-    public class Pessoa
+    public class PessoaFisica
     {
         public int Id { get; set; }
         //[Required(ErrorMessage = "Nome é obrigatório")]

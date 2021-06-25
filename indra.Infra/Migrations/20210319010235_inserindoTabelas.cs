@@ -9,7 +9,7 @@ namespace indra.Infra.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Pessoas",
+                name: "PessoasFisicas",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -29,7 +29,7 @@ namespace indra.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pessoas", x => x.Id);
+                    table.PrimaryKey("PK_PessoasFisicas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,15 +68,15 @@ namespace indra.Infra.Migrations
                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                    Login = table.Column<string>(nullable: true),
                    Senha = table.Column<int>(nullable: false),
-                   PessoaId = table.Column<int>(nullable: true)
+                   PessoaFisicaId = table.Column<int>(nullable: true)
                },
                constraints: table =>
                {
                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                    table.ForeignKey(
-                       name: "FK_Usuarios_Pessoas_PessoaId",
-                       column: x => x.PessoaId,
-                       principalTable: "Pessoas",
+                       name: "FK_Usuarios_PessoasFisicas_PessoaFisicaId",
+                       column: x => x.PessoaFisicaId,
+                       principalTable: "PessoasFisicas",
                        principalColumn: "Id",
                        onDelete: ReferentialAction.Restrict);
                });
@@ -97,15 +97,15 @@ namespace indra.Infra.Migrations
                 {
                     table.PrimaryKey("PK_Agendamentos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Agendamentos_Pessoas_ClienteId",
+                        name: "FK_Agendamentos_PessoasFisicas_ClienteId",
                         column: x => x.ClienteId,
-                        principalTable: "Pessoas",
+                        principalTable: "PessoasFisicas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Agendamentos_Pessoas_ProfissionalId",
+                        name: "FK_Agendamentos_PessoasFisicas_ProfissionalId",
                         column: x => x.ProfissionalId,
-                        principalTable: "Pessoas",
+                        principalTable: "PessoasFisicas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -135,9 +135,9 @@ namespace indra.Infra.Migrations
             {
                 table.PrimaryKey("PK_Agendamentos", x => x.Id);
                 table.ForeignKey(
-                    name: "FK_Agendamentos_Pessoas_ProfissionalId",
+                    name: "FK_Agendamentos_PessoasFisicas_ProfissionalId",
                     column: x => x.ProfissionalId,
-                    principalTable: "Pessoas",
+                    principalTable: "PessoasFisicas",
                     principalColumn: "Id",
                     onDelete: ReferentialAction.Cascade);
                 table.ForeignKey(
@@ -185,7 +185,7 @@ namespace indra.Infra.Migrations
                 name: "Agendamentos");
 
             migrationBuilder.DropTable(
-                name: "Pessoas");
+                name: "PessoasFisicas");
 
             migrationBuilder.DropTable(
                 name: "SituacaoAgendamentos");

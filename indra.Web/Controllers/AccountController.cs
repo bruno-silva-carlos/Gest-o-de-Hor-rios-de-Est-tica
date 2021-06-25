@@ -25,8 +25,8 @@ namespace indra.Web.Controllers
     {
         private readonly AgendamentoDb _context;
         private readonly IEmailSender _emailSender;
-        private LoginPessoa _login;
-        public AccountController(AgendamentoDb context, LoginPessoa login, IEmailSender emailSender, IHostingEnvironment env)
+        private LoginPessoaFisica _login;
+        public AccountController(AgendamentoDb context, LoginPessoaFisica login, IEmailSender emailSender, IHostingEnvironment env)
         {
             _context = context;
             _login = login;
@@ -39,7 +39,7 @@ namespace indra.Web.Controllers
 
             if (logado)
             {
-                if (_login.GetUsuario().Pessoa.Tipo == eTipo.Cliente)
+                if (_login.GetUsuario().PessoaFisica.Tipo == eTipo.Cliente)
                 {
                     return RedirectToAction("TelaPrincipal", "Home");
                 }
@@ -56,16 +56,16 @@ namespace indra.Web.Controllers
         {
             try
             {
-                Usuario usuario = _context.Usuarios.Where(p => p.Login == Email && p.Senha == Senha).Include(e => e.Pessoa).FirstOrDefault();
+                Usuario usuario = _context.Usuarios.Where(p => p.Login == Email && p.Senha == Senha).Include(e => e.PessoaFisica).FirstOrDefault();
                 if (usuario != null)
                 {
-                    var pessoa = _context.Pessoas.Find(usuario.PessoaId);
+                    var pessoa = _context.PessoasFisicas.Find(usuario.PessoaFisicaId);
 
                     if (pessoa.Ativo == true)
                     {
-                        usuario.Pessoa = pessoa;
+                        usuario.PessoaFisica = pessoa;
                         _login.Login(usuario);
-                        if (usuario.Pessoa.Tipo == eTipo.Cliente)
+                        if (usuario.PessoaFisica.Tipo == eTipo.Cliente)
                         {
                             return RedirectToAction("TelaPrincipal", "Home");
                         }
@@ -97,17 +97,17 @@ namespace indra.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistrarCliente(Pessoa pessoa)
+        public IActionResult RegistrarCliente(PessoaFisica pessoa)
         {
 
             ViewBag.error = null;
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == pessoa.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == pessoa.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um cliente criado com esse Email");
                 }
-                else if (_context.Pessoas.Where(e => e.Cpf == pessoa.Cpf).Count() > 0)
+                else if (_context.PessoasFisicas.Where(e => e.Cpf == pessoa.Cpf).Count() > 0)
                 {
                     throw new Exception("Já existe uma cliente criado com esse Cpf");
                 }
@@ -120,7 +120,7 @@ namespace indra.Web.Controllers
                     pessoa.DtAlteracao = DateTime.Now;
                     pessoa.Ativo = true;
                     pessoa.Tipo = eTipo.Cliente;
-                    usuario.Pessoa = pessoa;
+                    usuario.PessoaFisica = pessoa;
 
                     //ATRIBUIÇÃO DE DADOS DE PESSOA EM USUÁRIO
                     _context.Usuarios.Add(usuario);
@@ -144,15 +144,15 @@ namespace indra.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistrarProfissional(Pessoa pessoa)
+        public IActionResult RegistrarProfissional(PessoaFisica pessoa)
         {
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == pessoa.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == pessoa.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um profissional criado com esse Email");
                 }
-                else if (_context.Pessoas.Where(e => e.Cpf == pessoa.Cpf).Count() > 0)
+                else if (_context.PessoasFisicas.Where(e => e.Cpf == pessoa.Cpf).Count() > 0)
                 {
                     throw new Exception("Já existe uma profissional criado com esse Cpf");
                 }
@@ -165,7 +165,7 @@ namespace indra.Web.Controllers
                     pessoa.DtAlteracao = DateTime.Now;
                     pessoa.Ativo = true;
                     pessoa.Tipo = eTipo.Profissional;
-                    usuario.Pessoa = pessoa;
+                    usuario.PessoaFisica = pessoa;
 
                     //ATRIBUIÇÃO DE DADOS DE PESSOA EM USUÁRIO
                     _context.Usuarios.Add(usuario);
@@ -190,10 +190,10 @@ namespace indra.Web.Controllers
         [HttpPost]
         public IActionResult RecuperarConta(string Cpf)
         {
-            Pessoa pessoa = _context.Pessoas.Where(p => p.Cpf == Cpf).FirstOrDefault();
+            PessoaFisica pessoa = _context.PessoasFisicas.Where(p => p.Cpf == Cpf).FirstOrDefault();
             if (pessoa != null)
             {
-                Usuario user = _context.Usuarios.Where(e => e.PessoaId == pessoa.Id).FirstOrDefault();
+                Usuario user = _context.Usuarios.Where(e => e.PessoaFisicaId == pessoa.Id).FirstOrDefault();
                 _login.Login(user);
                 return RedirectToAction("Painel", "Home");
             }

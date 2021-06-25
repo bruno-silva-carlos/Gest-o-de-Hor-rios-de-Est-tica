@@ -1,5 +1,5 @@
 ﻿@model indra.Models.ProfissionalServico
-@inject indra.Web.Bibliotecas.LoginPessoa login
+@inject indra.Web.Bibliotecas.LoginPessoaFisica login
 
 @{
     ViewData["Title"] = "Atribuição de Serviço";
@@ -28,7 +28,7 @@
                         <form asp-action="Servico" asp-controller="Atribuicao">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
-                            <input type="hidden" asp-for="ProfissionalId" value=@perfil.PessoaId />
+                            <input type="hidden" asp-for="ProfissionalId" value=@perfil.PessoaFisicaId />
 
                             <div class="form-group">
                                 <label class="control-label" id="labelServico">Serviço</label>

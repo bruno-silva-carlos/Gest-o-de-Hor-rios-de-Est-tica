@@ -131,7 +131,7 @@ namespace indra.Infra.Migrations
                 b.ToTable("ProfissionalServicos");
             });
 
-            modelBuilder.Entity("Agendamento.Models.Pessoa", b =>
+            modelBuilder.Entity("Agendamento.Models.PessoaFisica", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,32 +175,32 @@ namespace indra.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pessoas");
+                    b.ToTable("PessoasFisicas");
                 });
 
             modelBuilder.Entity("Agendamento.Models.Usuario", b =>
             {
-                b.HasOne("Agendamento.Models.Pessoa", "Pessoa")
+                b.HasOne("Agendamento.Models.PessoaFisica", "PessoaFisica")
                     .WithMany()
-                    .HasForeignKey("PessoaId");
+                    .HasForeignKey("PessoaFisicaId");
             });
 
             modelBuilder.Entity("Agendamento.Models.Usuario", b =>
             {
-                b.HasOne("Agendamento.Models.Pessoa", "Pessoa")
+                b.HasOne("Agendamento.Models.PessoaFisica", "PessoaFisica")
                     .WithMany()
-                    .HasForeignKey("PessoaId");
+                    .HasForeignKey("PessoaFisicaId");
             });
 
             modelBuilder.Entity("Agendamento.Models.Agendamentos", b =>
                 {
-                    b.HasOne("Agendamento.Models.Pessoa", "Pessoa")
+                    b.HasOne("Agendamento.Models.PessoaFisica", "PessoaFisica")
                         .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Agendamento.Models.Pessoa", "Pessoa")
+                    b.HasOne("Agendamento.Models.PessoaFisica", "PessoaFisica")
                         .WithMany()
                         .HasForeignKey("ProfissionalId")
                         .OnDelete(DeleteBehavior.Cascade)

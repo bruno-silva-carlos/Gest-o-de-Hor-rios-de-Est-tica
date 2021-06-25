@@ -19,7 +19,7 @@ namespace indra.Web.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var admins = _context.Pessoas.Where(e => e.Tipo == Models.Enums.eTipo.Administrador).OrderBy(e => e.Id).ToList();
+            var admins = _context.PessoasFisicas.Where(e => e.Tipo == Models.Enums.eTipo.Administrador).OrderBy(e => e.Id).ToList();
             return View(admins);
         }
 
@@ -29,11 +29,11 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(Pessoa admin)
+        public IActionResult Criar(PessoaFisica admin)
         {
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == admin.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == admin.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um admin criado com o email " + admin.Email);
                 }
@@ -43,7 +43,7 @@ namespace indra.Web.Admin.Controllers
                     admin.DtAlteracao = DateTime.Now;
                     admin.Tipo = Models.Enums.eTipo.Administrador;
                     admin.Ativo = true;
-                    _context.Pessoas.Add(admin);
+                    _context.PessoasFisicas.Add(admin);
                     _context.SaveChanges();
                     TempData["S_ADM_C"] = "Administrador " + admin.Nome + " criado.";
                     return RedirectToAction("Index");
@@ -58,7 +58,7 @@ namespace indra.Web.Admin.Controllers
 
         public IActionResult Editar(int id)
         {
-            var admin = _context.Pessoas.Find(id);
+            var admin = _context.PessoasFisicas.Find(id);
             if (admin == null)
             {
                 return NotFound();
@@ -70,12 +70,12 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editar(Pessoa admin)
+        public IActionResult Editar(PessoaFisica admin)
         {
             ViewBag.error = null;
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == admin.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == admin.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um profissional criado com o email " + admin.Email);
                 }
@@ -97,7 +97,7 @@ namespace indra.Web.Admin.Controllers
 
         public IActionResult Desativar(int id)
         {
-            var admin = _context.Pessoas.Find(id);
+            var admin = _context.PessoasFisicas.Find(id);
             return View(admin);
         }
 
@@ -106,7 +106,7 @@ namespace indra.Web.Admin.Controllers
             ViewBag.error = null;
             try
             {
-                var admin = _context.Pessoas.Find(id);
+                var admin = _context.PessoasFisicas.Find(id);
 
 
                 if (admin == null)
@@ -117,7 +117,7 @@ namespace indra.Web.Admin.Controllers
                 {
                     admin.DtAlteracao = DateTime.Now;
                     admin.Ativo = true;
-                    _context.Pessoas.Update(admin);
+                    _context.PessoasFisicas.Update(admin);
                     _context.SaveChanges();
                     TempData["S_ADM_A"] = "Administrador " + admin.Nome + " ativado ";
                     return RedirectToAction("Index");
@@ -126,7 +126,7 @@ namespace indra.Web.Admin.Controllers
             catch (Exception e)
             {
                 ViewBag.error = e.Message;
-                var admin = _context.Pessoas.Find(id);
+                var admin = _context.PessoasFisicas.Find(id);
                 TempData["E_ADM_A"] = "Erro ao ativar admin " + admin.Nome;
                 return View("Index");
             }
@@ -137,10 +137,10 @@ namespace indra.Web.Admin.Controllers
         {
             try
             {
-                var admin = _context.Pessoas.Find(id);
+                var admin = _context.PessoasFisicas.Find(id);
                 admin.DtAlteracao = DateTime.Now;
                 admin.Ativo = false;
-                _context.Pessoas.Update(admin);
+                _context.PessoasFisicas.Update(admin);
                 _context.SaveChanges();
                 return Json(new { success = true, message = $"{admin.Nome} desativado." });
             }
@@ -156,7 +156,7 @@ namespace indra.Web.Admin.Controllers
             try
             {
                 var normalizado = string.IsNullOrEmpty(termoDeBusca) ? "" : termoDeBusca.ToUpper();
-                var admins = _context.Pessoas.Where(c => c.Tipo == Models.Enums.eTipo.Administrador && c.Nome.ToUpper().Contains(normalizado)
+                var admins = _context.PessoasFisicas.Where(c => c.Tipo == Models.Enums.eTipo.Administrador && c.Nome.ToUpper().Contains(normalizado)
                 || c.Email.Contains(normalizado)
                 || c.Id.ToString().Contains(normalizado)).ToList();
 

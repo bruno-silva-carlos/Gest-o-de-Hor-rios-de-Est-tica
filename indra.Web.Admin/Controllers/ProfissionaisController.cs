@@ -25,7 +25,7 @@ namespace indra.Web.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var profissionais = _context.Pessoas.Where(e => e.Tipo == eTipo.Profissional).OrderBy(e => e.Id).ToList();
+            var profissionais = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional).OrderBy(e => e.Id).ToList();
             return View(profissionais);
         }
 
@@ -35,11 +35,11 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(Pessoa profissional)
+        public IActionResult Criar(PessoaFisica profissional)
         {
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == profissional.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == profissional.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um profissional criado com o email " + profissional.Email);
                 }
@@ -52,7 +52,7 @@ namespace indra.Web.Admin.Controllers
                     profissional.DtAlteracao = DateTime.Now;
                     profissional.Tipo = eTipo.Profissional;
                     profissional.Ativo = true;
-                    usuario.Pessoa = profissional;
+                    usuario.PessoaFisica = profissional;
                     _context.Usuarios.Add(usuario);
                     _context.SaveChanges();
                     TempData["S_PROF_C"] = "Profissional " + profissional.Nome + " criado.";
@@ -69,7 +69,7 @@ namespace indra.Web.Admin.Controllers
 
         public IActionResult Editar(int id)
         {
-            var profissional = _context.Pessoas.Find(id);
+            var profissional = _context.PessoasFisicas.Find(id);
             if (profissional == null)
             {
                 return NotFound();
@@ -81,18 +81,18 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editar(Pessoa profissional)
+        public IActionResult Editar(PessoaFisica profissional)
         {
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == profissional.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == profissional.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um profissional criado com o email " + profissional.Email);
                 }
                 else
                 {
                     profissional.DtAlteracao = DateTime.Now;
-                    _context.Pessoas.Update(profissional);
+                    _context.PessoasFisicas.Update(profissional);
                     _context.SaveChanges();
                     TempData["S_PROF_E"] = "Profissional " + profissional.Nome + " editado.";
                     return RedirectToAction("Index");
@@ -107,7 +107,7 @@ namespace indra.Web.Admin.Controllers
 
         public IActionResult Desativar(int id)
         {
-            var profissional = _context.Pessoas.Find(id);
+            var profissional = _context.PessoasFisicas.Find(id);
             return View(profissional);
         }
 
@@ -116,7 +116,7 @@ namespace indra.Web.Admin.Controllers
             ViewBag.error = null;
             try
             {
-                var profissional = _context.Pessoas.Find(id);
+                var profissional = _context.PessoasFisicas.Find(id);
 
 
                 if (profissional == null)
@@ -127,7 +127,7 @@ namespace indra.Web.Admin.Controllers
                 {
                     profissional.DtAlteracao = DateTime.Now;
                     profissional.Ativo = true;
-                    _context.Pessoas.Update(profissional);
+                    _context.PessoasFisicas.Update(profissional);
                     _context.SaveChanges();
                     TempData["S_PROF_A"] = " Profissional " + profissional.Nome + " ativado ";
                     return RedirectToAction("Index");
@@ -136,7 +136,7 @@ namespace indra.Web.Admin.Controllers
             catch (Exception e)
             {
                 ViewBag.error = e.Message;
-                var profissional = _context.Pessoas.Find(id);
+                var profissional = _context.PessoasFisicas.Find(id);
                 TempData["E_PROF_A"] = "Erro ao ativar profissional " + profissional.Nome;
                 return View("Index");
             }
@@ -147,7 +147,7 @@ namespace indra.Web.Admin.Controllers
         {
             try
             {
-                var profissional = _context.Pessoas.Find(id);
+                var profissional = _context.PessoasFisicas.Find(id);
 
                 var agendamentoExistenteProfissional = _context.Agendamentos
                     .Where(e => e.ProfissionalId == id && e.SituacaoAgendamentoId == 1);
@@ -159,7 +159,7 @@ namespace indra.Web.Admin.Controllers
                 {
                     profissional.DtAlteracao = DateTime.Now;
                     profissional.Ativo = false;
-                    _context.Pessoas.Update(profissional);
+                    _context.PessoasFisicas.Update(profissional);
                     _context.SaveChanges();
                     return Json(new { success = true, message = $"{profissional.Nome} desativado." });
                 }
@@ -172,7 +172,7 @@ namespace indra.Web.Admin.Controllers
 
         public IActionResult AtribuirServico()
         {
-            ViewBag.Profissional = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
+            ViewBag.Profissional = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
             ViewBag.Servico = new SelectList(_context.Servicos, "Id", "Nome");
             return View();
         }
@@ -204,7 +204,7 @@ namespace indra.Web.Admin.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Profissional = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
+                ViewBag.Profissional = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
                 ViewBag.Servico = new SelectList(_context.Servicos, "Id", "Nome");
                 ViewBag.error = e.Message;
                 TempData["E_ATRI_SER"] = "Profissional já associado ao Serviço";
@@ -218,7 +218,7 @@ namespace indra.Web.Admin.Controllers
             try
             {
                 var normalizado = termoDeBusca.IsNullEmptyOrWhitespace() ? "" : termoDeBusca.ToUpper();
-                var profissionais = _context.Pessoas.Where(c => c.Tipo == eTipo.Profissional &&
+                var profissionais = _context.PessoasFisicas.Where(c => c.Tipo == eTipo.Profissional &&
                 (c.Nome.ToUpper().Contains(normalizado)
                 || c.Celular.Contains(normalizado)
                 || c.Email.Contains(normalizado)

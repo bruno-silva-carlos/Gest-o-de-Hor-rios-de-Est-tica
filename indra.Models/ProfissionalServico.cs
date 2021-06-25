@@ -11,7 +11,7 @@ namespace indra.Models
 
         [ForeignKey("idProfissional")]
         public int ProfissionalId { get; set; }
-        public virtual Pessoa Profissional { get; set; }
+        public virtual PessoaFisica Profissional { get; set; }
 
         [ForeignKey("idServico")]
         public int ServicoId { get; set; }

@@ -1,6 +1,6 @@
 ﻿@*@model IEnumerable<indra.Models.Agendamentos>*@
 @model indra.Models.Agendamentos 
-@inject indra.Web.Bibliotecas.LoginPessoa pessoa
+@inject indra.Web.Bibliotecas.LoginPessoaFisica pessoa
 
 @{
     ViewData["Title"] = "Agendamento";
@@ -28,7 +28,7 @@
                         <form id="formCriar">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="SituacaoAgendamentoId" value="1" />
-                            <input type="hidden" asp-for="ClienteId" value="@cliente.Pessoa.Id" />
+                            <input type="hidden" asp-for="ClienteId" value="@cliente.PessoaFisica.Id" />
                             <div class="form-group">
                                 <label class="control-label" id="labelAgendamento">Serviço</label>
                                 @Html.DropDownList("ServicoId", ViewBag.Servico, "", new

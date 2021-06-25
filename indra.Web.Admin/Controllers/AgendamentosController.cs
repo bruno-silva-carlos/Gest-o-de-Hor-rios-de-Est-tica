@@ -35,8 +35,8 @@ namespace indra.Web.Admin.Controllers
         // Retorna a tela de Criação de Agendamento, trazendo dados de Profissionais, Clientes e Serviços
         public IActionResult Criar()
         {
-            ViewBag.Profissional = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
-            ViewBag.Cliente = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Cliente), "Id", "Nome");
+            ViewBag.Profissional = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
+            ViewBag.Cliente = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Cliente), "Id", "Nome");
             ViewBag.Servico = new SelectList(_context.Servicos, "Id", "Nome");
             return View();
         }
@@ -56,7 +56,7 @@ namespace indra.Web.Admin.Controllers
                     e.Horario.Hour == horaVerificacao &&
                     e.Horario.Minute == minutoVerificacao);
 
-                var clientePersistido = _context.Pessoas.FirstOrDefault(c => c.Id == agendamento.ClienteId);
+                var clientePersistido = _context.PessoasFisicas.FirstOrDefault(c => c.Id == agendamento.ClienteId);
                 if (clientePersistido == null)
                     throw new Exception("Cliente não encontrado, por favor recarregue a página e tente novamente");
 
@@ -86,8 +86,8 @@ namespace indra.Web.Admin.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Profissional = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
-                ViewBag.Cliente = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Cliente), "Id", "Nome");
+                ViewBag.Profissional = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
+                ViewBag.Cliente = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Cliente), "Id", "Nome");
                 ViewBag.Servico = new SelectList(_context.Servicos, "Id", "Nome");
                 ViewBag.error = e.Message;
                 TempData["E_AGENDA_C"] = "Erro ao fazer agendamento";

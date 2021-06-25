@@ -1,4 +1,4 @@
-﻿@inject indra.Web.Bibliotecas.LoginPessoa login
+﻿@inject indra.Web.Bibliotecas.LoginPessoaFisica login
 
 @{
     ViewData["Title"] = "Perfil";
@@ -34,7 +34,7 @@
                         <div class="row">
                             <div class="col col-xs-12">
 
-                                @if (login.GetUsuario().Pessoa.Tipo == indra.Models.Enums.eTipo.Profissional)
+                                @if (login.GetUsuario().PessoaFisica.Tipo == indra.Models.Enums.eTipo.Profissional)
                                 {
                                     <a asp-controller="Atribuicao" asp-action="Servico" id="botaoResponsivo"
                                        class="btn btn-default btnAzul pull-right" style="background-color: #00bcd4;border: 0px">
@@ -50,7 +50,7 @@
                             <div id="tipo" class="col col-xs-12">
                                 <label class="label">Tipo de Usuário: </label>
                                 <div class="dadosUsuario">
-                                    @*<span id="perfil" class="col col-xs-12">  @usuario.Pessoa.Tipo</span>*@
+                                    @*<span id="perfil" class="col col-xs-12">  @usuario.PessoaFisica.Tipo</span>*@
                                     <span id="perfil" class="col col-xs-12">  @ViewBag.Tipo</span>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                             <div class="col col-xs-12">
                                 <label class="label">Nome: </label>
                                 <div class="dadosUsuario">
-                                    @*<span id="perfil" class="col col-xs-12">  @usuario.Pessoa.Nome</span>*@
+                                    @*<span id="perfil" class="col col-xs-12">  @usuario.PessoaFisica.Nome</span>*@
                                     <span id="perfil" class="col col-xs-12">  @ViewBag.Nome</span>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                             <div class="col col-xs-12">
                                 <label class="label">Data de Nascimento: </label>
                                 <div class="dadosUsuario">
-                                    @*<span id="perfil" class="col col-xs-12">  @usuario.Pessoa.DtNascimento.ToString("dd/MM/yyyy")</span>*@
+                                    @*<span id="perfil" class="col col-xs-12">  @usuario.PessoaFisica.DtNascimento.ToString("dd/MM/yyyy")</span>*@
                                     <span id="perfil" class="col col-xs-12">  @ViewBag.DtNascimento</span>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                             <div class="col col-xs-12">
                                 <label class="label">Sexo: </label>
                                 <div class="dadosUsuario">
-                                    @*<span id="perfil" class="col col-xs-12">  @usuario.Pessoa.Sexo</span>*@
+                                    @*<span id="perfil" class="col col-xs-12">  @usuario.PessoaFisica.Sexo</span>*@
                                     <span id="perfil" class="col col-xs-12">  @ViewBag.Sexo</span>
                                 </div>
                             </div>
@@ -90,7 +90,7 @@
                             <div class="col col-xs-12">
                                 <label class="label">CPF: </label>
                                 <div class="dadosUsuario">
-                                    @*<span id="perfil" class="col col-xs-12">  @usuario.Pessoa.Cpf</span>*@
+                                    @*<span id="perfil" class="col col-xs-12">  @usuario.PessoaFisica.Cpf</span>*@
                                     <span id="perfil" class="col col-xs-12">  @ViewBag.Cpf</span>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                             <div class="col col-xs-12">
                                 <label class="label">Celular: </label>
                                 <div class="dadosUsuario">
-                                    @*<span id="perfil" class="col col-xs-12">  @usuario.Pessoa.Celular</span>*@
+                                    @*<span id="perfil" class="col col-xs-12">  @usuario.PessoaFisica.Celular</span>*@
                                     <span id="perfil" class="col col-xs-12">  @ViewBag.Celular</span>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
                             <div class="col col-xs-12">
                                 <label class="label">Email: </label>
                                 <div class="dadosUsuario">
-                                    @*<span id="perfil" class="col col-xs-12">  @usuario.Pessoa.Email</span>*@
+                                    @*<span id="perfil" class="col col-xs-12">  @usuario.PessoaFisica.Email</span>*@
                                     <span id="perfil" class="col col-xs-12">  @ViewBag.Email</span>
                                 </div>
                             </div>
@@ -122,14 +122,14 @@
                             Atualizar Perfil
                         </a>
 
-                        @if (login.GetUsuario().Pessoa.Tipo == indra.Models.Enums.eTipo.Cliente)
+                        @if (login.GetUsuario().PessoaFisica.Tipo == indra.Models.Enums.eTipo.Cliente)
                         {
                             <a asp-action="TelaPrincipal" asp-controller="Home" class="btn btnCinza pull-left">
                                 <i class="fa fa-arrow-left"></i>
                                 Voltar
                             </a>
                         }
-                        else if (login.GetUsuario().Pessoa.Tipo == indra.Models.Enums.eTipo.Profissional)
+                        else if (login.GetUsuario().PessoaFisica.Tipo == indra.Models.Enums.eTipo.Profissional)
                         {
                             <a asp-action="Painel" asp-controller="Home" class="btn btnCinza pull-left">
                                 <i class="fa fa-arrow-left"></i>

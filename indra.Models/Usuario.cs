@@ -15,7 +15,7 @@ namespace indra.Models
         public string Login { get; set; }
         [Required(ErrorMessage = "Senha é requirida")]
         public string Senha { get; set; }
-        public int PessoaId { get; set; }
-        public virtual Pessoa Pessoa { get; set; }
+        public int PessoaFisicaId { get; set; }
+        public virtual PessoaFisica PessoaFisica { get; set; }
     }
 }

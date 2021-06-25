@@ -1,12 +1,12 @@
 ﻿@model indra.Models.Agendamentos
 
-@inject indra.Web.Bibliotecas.LoginPessoa pessoa
+@inject indra.Web.Bibliotecas.LoginPessoaFisica pessoa
 
 @{
     ViewData["Title"] = "Agendamento";
     var cliente = pessoa.GetUsuario();
     var servico = (indra.Models.Servico)ViewBag.Servico;
-    var profissional = (indra.Models.Pessoa)ViewBag.Profissional;
+    var profissional = (indra.Models.PessoaFisica)ViewBag.Profissional;
 }
 @if (TempData["E_AGENDA_C"] != null)
 {

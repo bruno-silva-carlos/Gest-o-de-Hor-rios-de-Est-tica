@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace indra.Web.Bibliotecas
 {
-    public class LoginPessoa
+    public class LoginPessoaFisica
     {
-        private string Key = "Login.Pessoa";
+        private string Key = "Login.PessoaFisica";
         private Sessao _sessao;
 
-        public LoginPessoa(Sessao sessao) 
+        public LoginPessoaFisica(Sessao sessao) 
         {
             _sessao = sessao;
         }

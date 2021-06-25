@@ -15,15 +15,15 @@ namespace indra.Web.Controllers
     public class AgendamentosController : Controller
     {
         private readonly AgendamentoDb _context;
-        private readonly LoginPessoa _login;
-        public AgendamentosController(AgendamentoDb context, LoginPessoa login)
+        private readonly LoginPessoaFisica _login;
+        public AgendamentosController(AgendamentoDb context, LoginPessoaFisica login)
         {
             _context = context;
             _login = login;
         }
         public IActionResult Criar()
         {
-            ViewBag.Profissional = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
+            ViewBag.Profissional = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
             ViewBag.Servico = new SelectList(_context.Servicos, "Id", "Nome");
             return View();
         }
@@ -68,7 +68,7 @@ namespace indra.Web.Controllers
                 }
                 else
                 {
-                    //agendamento.ClienteId = _login.GetUsuario().PessoaId;
+                    //agendamento.ClienteId = _login.GetUsuario().PessoaFisicaId;
                     _context.Agendamentos.Add(agendamento);
                     _context.SaveChanges();
                     return Json(new { success = true, message = $"Agendamento marcado com sucesso." });
@@ -76,7 +76,7 @@ namespace indra.Web.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Profissional = new SelectList(_context.Pessoas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
+                ViewBag.Profissional = new SelectList(_context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional), "Id", "Nome");
                 ViewBag.Servico = new SelectList(_context.Servicos, "Id", "Nome");
                 return Json(new { erro = true, message = $"{e.Message}" });
             }
@@ -91,7 +91,7 @@ namespace indra.Web.Controllers
             }
             else
             {
-                ViewBag.Profissional = _context.Pessoas.Where(e => e.Id == agendamento.ProfissionalId && e.Tipo == eTipo.Profissional).FirstOrDefault();
+                ViewBag.Profissional = _context.PessoasFisicas.Where(e => e.Id == agendamento.ProfissionalId && e.Tipo == eTipo.Profissional).FirstOrDefault();
                 ViewBag.Servico = _context.Servicos.Where(e => e.Id == agendamento.ServicoId).FirstOrDefault();
                 return View(agendamento);
             }
@@ -117,7 +117,7 @@ namespace indra.Web.Controllers
                 }
                 else
                 {
-                    agendamento.ClienteId = _login.GetUsuario().PessoaId;
+                    agendamento.ClienteId = _login.GetUsuario().PessoaFisicaId;
                     _context.Update(agendamento);
                     _context.SaveChanges();
                     TempData["S_AGENDA_E"] = "Agendamento editado";
@@ -126,7 +126,7 @@ namespace indra.Web.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.Profissional = _context.Pessoas.Where(e => e.Id == agendamento.ProfissionalId && e.Tipo == eTipo.Profissional).FirstOrDefault();
+                ViewBag.Profissional = _context.PessoasFisicas.Where(e => e.Id == agendamento.ProfissionalId && e.Tipo == eTipo.Profissional).FirstOrDefault();
                 ViewBag.Servico = _context.Servicos.Where(e => e.Id == agendamento.ServicoId).FirstOrDefault();
                 TempData["S_AGENDA_E"] = e.Message;
                 return View(agendamento);

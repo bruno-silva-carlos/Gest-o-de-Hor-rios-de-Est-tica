@@ -24,7 +24,7 @@ namespace indra.Web.Admin.Controllers
         }
         public IActionResult Index()
         {
-            var clientes = _context.Pessoas.Where(e => e.Tipo == eTipo.Cliente).OrderBy(e => e.Id).ToList();
+            var clientes = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Cliente).OrderBy(e => e.Id).ToList();
             return View(clientes);
         }
 
@@ -34,16 +34,16 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(Pessoa cliente)
+        public IActionResult Criar(PessoaFisica cliente)
         {
             ViewBag.error = null;
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == cliente.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == cliente.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um cliente com o email " + cliente.Email + " criado");
                 }
-                else if (_context.Pessoas.Where(e => e.Cpf == cliente.Cpf).Count() > 0)
+                else if (_context.PessoasFisicas.Where(e => e.Cpf == cliente.Cpf).Count() > 0)
                 {
                     throw new Exception("Já existe um cliente com o CPF " + cliente.Cpf + " criado");
                 }
@@ -56,7 +56,7 @@ namespace indra.Web.Admin.Controllers
                     cliente.DtAlteracao = DateTime.Now;
                     cliente.Tipo = eTipo.Cliente;
                     cliente.Ativo = true;
-                    usuario.Pessoa = cliente;
+                    usuario.PessoaFisica = cliente;
                     _context.Usuarios.Add(usuario);
                     _context.SaveChanges();
                     TempData["S_CLIE_C"] = "Cliente " + cliente.Nome + " criado.";
@@ -72,7 +72,7 @@ namespace indra.Web.Admin.Controllers
 
         public IActionResult Editar(int id)
         {
-            var cliente = _context.Pessoas.Find(id);
+            var cliente = _context.PessoasFisicas.Find(id);
             if (cliente == null)
             {
                 return NotFound();
@@ -84,18 +84,18 @@ namespace indra.Web.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editar(Pessoa cliente)
+        public IActionResult Editar(PessoaFisica cliente)
         {
             try
             {
-                if (_context.Pessoas.Where(e => e.Email == cliente.Email).Count() > 0)
+                if (_context.PessoasFisicas.Where(e => e.Email == cliente.Email).Count() > 0)
                 {
                     throw new Exception("Já existe um profissional criado com o email " + cliente.Email);
                 }
                 else
                 {
                     cliente.DtAlteracao = DateTime.Now;
-                    _context.Pessoas.Update(cliente);
+                    _context.PessoasFisicas.Update(cliente);
                     _context.SaveChanges();
                     TempData["S_CLIE_E"] = "Cliente " + cliente.Nome + " editado.";
                     return RedirectToAction("Index");
@@ -113,7 +113,7 @@ namespace indra.Web.Admin.Controllers
 
             try
             {
-                var cliente = _context.Pessoas.Find(id);
+                var cliente = _context.PessoasFisicas.Find(id);
 
                 if (cliente == null)
                 {
@@ -123,7 +123,7 @@ namespace indra.Web.Admin.Controllers
                 {
                     cliente.DtAlteracao = DateTime.Now;
                     cliente.Ativo = true;
-                    _context.Pessoas.Update(cliente);
+                    _context.PessoasFisicas.Update(cliente);
                     _context.SaveChanges();
                     return Json(new { success = true, message = $"{cliente.Nome} ativado." });
                 }
@@ -138,7 +138,7 @@ namespace indra.Web.Admin.Controllers
 
         public IActionResult Desativar(int id)
         {
-            var cliente = _context.Pessoas.Where(e => e.Id == id).FirstOrDefault();
+            var cliente = _context.PessoasFisicas.Where(e => e.Id == id).FirstOrDefault();
             return View(cliente);
         }
 
@@ -148,7 +148,7 @@ namespace indra.Web.Admin.Controllers
             ViewBag.error = null;
             try
             {
-                var cliente = _context.Pessoas.Where(e => e.Id == id).FirstOrDefault();
+                var cliente = _context.PessoasFisicas.Where(e => e.Id == id).FirstOrDefault();
 
                 var agendamentoExistenteCliente = _context.Agendamentos.Where(e => e.ClienteId == id && e.SituacaoAgendamentoId == 1);
                 if (agendamentoExistenteCliente.Count() > 0)
@@ -159,7 +159,7 @@ namespace indra.Web.Admin.Controllers
                 {
                     cliente.DtAlteracao = DateTime.Now;
                     cliente.Ativo = false;
-                    _context.Pessoas.Update(cliente);
+                    _context.PessoasFisicas.Update(cliente);
                     _context.SaveChanges();
                     return Json(new { success = true, message = $"{cliente.Nome} desativado." });
                 }
@@ -177,7 +177,7 @@ namespace indra.Web.Admin.Controllers
             try
             {
                 var normalizado = string.IsNullOrEmpty(termoDeBusca) ? "" : termoDeBusca.ToUpper();
-                var clientes = _context.Pessoas.Where(c => c.Tipo == eTipo.Cliente &&
+                var clientes = _context.PessoasFisicas.Where(c => c.Tipo == eTipo.Cliente &&
                 (c.Nome.ToUpper().Contains(normalizado)
                 || c.Celular.Contains(normalizado)
                 || c.Email.Contains(normalizado)

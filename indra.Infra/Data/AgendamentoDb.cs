@@ -17,7 +17,7 @@ namespace indra.Infra.Data
         {
         }
         public DbSet<Agendamentos> Agendamentos { get; set; }
-        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<PessoaFisica> PessoasFisicas { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<SituacaoAgendamento> SituacaoAgendamentos { get; internal set; }
         public DbSet<ProfissionalServico> ProfissionalServicos { get; set; }

@@ -13,13 +13,13 @@ namespace indra.Models
         public int Id { get; set; }
         [Required]
         public int ProfissionalId { get; set; }
-        public virtual Pessoa Profissional { get; set; }
+        public virtual PessoaFisica Profissional { get; set; }
         [Required]
         public int ServicoId { get; set; }
         public virtual Servico Servico { get; set; }
         [Required]
         public int ClienteId { get; set; }
-        public virtual Pessoa Cliente { get; set; }
+        public virtual PessoaFisica Cliente { get; set; }
         [Required]
         public int SituacaoAgendamentoId { get; set; }
         public virtual SituacaoAgendamento SituacaoAgendamento { get; set; }

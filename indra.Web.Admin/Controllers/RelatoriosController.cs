@@ -85,7 +85,7 @@ namespace indra.Web.Admin.Controllers
         [HttpPost]
         public IActionResult Profissionais(int? param)
         {
-            List<Pessoa> profissionais = _context.Pessoas.Where(e => e.Tipo == eTipo.Profissional).OrderBy(e => e.Id).ToList();
+            List<PessoaFisica> profissionais = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Profissional).OrderBy(e => e.Id).ToList();
             RelatorioProfissionais report = new RelatorioProfissionais(_oHostEnvironment);
             return File(report.PrepareReport(profissionais), "application/pdf");
         }
@@ -99,7 +99,7 @@ namespace indra.Web.Admin.Controllers
         [HttpPost]
         public IActionResult Clientes(int? param)
         {
-            List<Pessoa> clientes = _context.Pessoas.Where(e => e.Tipo == eTipo.Cliente).OrderBy(e => e.Id).ToList();
+            List<PessoaFisica> clientes = _context.PessoasFisicas.Where(e => e.Tipo == eTipo.Cliente).OrderBy(e => e.Id).ToList();
             RelatorioClientes report = new RelatorioClientes(_oHostEnvironment);
             return File(report.PrepareReport(clientes), "application/pdf");
         }
